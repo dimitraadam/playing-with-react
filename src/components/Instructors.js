@@ -9,6 +9,7 @@ const Instructors = (instructorIds) => {
     const enpointPrefix = `${API_BASE_URL}/instructors`;
 
     const [instructors, setInstructors] = useState([]);
+    const [error, setError] = useState(null);
     
     useEffect(() => {
 
