@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Avatar, Chip, Typography, Grid, makeStyles, Paper } from "@material-ui/core";
 import axios from "axios";
+import { STATS_ENDPOINT } from "../../api/endpoints";
 
 const useStyles = makeStyles(() => ({
     paper: {
@@ -12,9 +13,6 @@ const useStyles = makeStyles(() => ({
         textTransform: 'uppercase',
       },
 }));
-
-const API_BASE_URL = "http://localhost:3001";
-const enpointPrefix = `${API_BASE_URL}/stats`;
 
 export default function Statistics() {
 
@@ -29,7 +27,7 @@ export default function Statistics() {
             setError(false);
             setIsLoading(true);
 
-            axios.get(enpointPrefix)
+            axios.get(STATS_ENDPOINT)
                 .then(response => {
                     setStats(response.data);
                     setIsLoading(false);

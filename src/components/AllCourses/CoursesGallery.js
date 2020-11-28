@@ -3,9 +3,7 @@ import CourseCard from "./CourseCard";
 import axios from 'axios';
 import { Grid } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
-
-const API_BASE_URL = "http://localhost:3001";
-const enpointPrefix = `${API_BASE_URL}/courses`;
+import { COURSES_ENDPOINT } from "../../api/endpoints";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -21,7 +19,7 @@ export default function CoursesGallery() {
             setError(false);
             setIsLoading(true);
 
-            axios.get(enpointPrefix)
+            axios.get(COURSES_ENDPOINT)
                 .then(response => {
                     setCourses(response.data);
                     setIsLoading(false);

@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Instructor from "./Instructor";
 import {  Typography, Grid } from '@material-ui/core';
 import axios from 'axios';
+import { INSTRUCTORS_ENDPOINT } from "../api/endpoints"; 
 
 const Instructors = ({instructorIds}) => {
-
-    const API_BASE_URL = "http://localhost:3001";
-    const enpointPrefix = `${API_BASE_URL}/instructors`;
 
     const [instructors, setInstructors] = useState([]);
     const [error, setError] = useState(null);
@@ -15,8 +13,7 @@ const Instructors = ({instructorIds}) => {
 
         const fetchData = () => {
             setError(false);
-
-            axios.get(enpointPrefix)
+            axios.get(INSTRUCTORS_ENDPOINT)
                 .then(response => {
                     setInstructors(response.data);
                 })

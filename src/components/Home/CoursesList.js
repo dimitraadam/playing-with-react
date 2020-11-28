@@ -3,6 +3,7 @@ import { Button, Grid, makeStyles, TableContainer, Table, TableHead, TableRow, T
 import CheckIcon from '@material-ui/icons/Check';
 import axios from 'axios';
 import { COURSES } from "../../constants/routes";
+import { COURSES_ENDPOINT } from "../../api/endpoints";
 
 const useStyles = makeStyles({
     table: {
@@ -18,9 +19,6 @@ const useStyles = makeStyles({
     }
 });
 
-const API_BASE_URL = "http://localhost:3001";
-const enpointPrefix = `${API_BASE_URL}/courses`;
-
 export default function CoursesList() {
     const classes = useStyles();
 
@@ -32,8 +30,8 @@ export default function CoursesList() {
         const fetchData = () => {
             setError(false);
             setIsLoading(true);
-
-            axios.get(enpointPrefix)
+            
+            axios.get(COURSES_ENDPOINT)
                 .then(response => {
                     setCourses(response.data);
                     setIsLoading(false);

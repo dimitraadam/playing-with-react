@@ -7,13 +7,11 @@ import Instructors from "../Instructors";
 import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import { COURSES } from "../../constants/routes";
+import { COURSES_ENDPOINT } from "../../api/endpoints"; 
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-
-const API_BASE_URL = "http://localhost:3001";
-const enpointPrefix = `${API_BASE_URL}/courses`;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +26,7 @@ export default function CourseDetails() {
     const history = useHistory();
 
     const deleteLesson = () => {
-        axios.delete(`${enpointPrefix}/${id}`);
+        axios.delete(`${COURSES_ENDPOINT}/${id}`);
         history.push({COURSES});
     };
 
@@ -42,7 +40,7 @@ export default function CourseDetails() {
         const fetchData = () => {
             setError(false);
 
-            axios.get(`${enpointPrefix}/${id}`)
+            axios.get(`${COURSES_ENDPOINT}/${id}`)
                 .then(response => {
                     setCourse(response.data);
                 })
