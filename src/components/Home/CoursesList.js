@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Grid, makeStyles, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import axios from 'axios';
+import { COURSES } from "../../constants/routes";
 
 const useStyles = makeStyles({
     table: {
@@ -77,13 +78,13 @@ export default function CoursesList() {
                                 <TableCell> {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</TableCell>
                                 <TableCell>{course.price.normal} &euro;</TableCell>
                                 <TableCell>{course.dates.start_date} - {course.dates.end_date}</TableCell>
-                                <TableCell><Button variant="contained" color="primary" href={"/courses/" + course.id}>View</Button></TableCell>
+                                <TableCell><Button variant="contained" color="primary" href={COURSES + "/" + course.id}>View</Button></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button href="/courses" variant="contained" color="primary" className={classes.btn}>View All</Button>
+            <Button href={COURSES} variant="contained" color="primary" className={classes.btn}>View All</Button>
         </>
     );
 }

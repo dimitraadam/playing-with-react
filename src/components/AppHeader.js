@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles, AppBar, Toolbar, Typography, Button } from '@material-ui/core';  //TODO
+import { HOME, COURSES, COURSES_NEW} from "../constants/routes";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -24,10 +25,10 @@ export default function AppHeader() {
         <AppBar position="static" className={classes.root}>
             <Toolbar>
                 <Typography variant="h6" className={classes.homeTitle}>
-                    <Button href="/" style={{color:"white", fontSize:"1.2em"}}>Legendary.Academy Dashboard</Button>
+                    <Button href={HOME} style={{color:"white", fontSize:"1.2em"}}>Legendary.Academy Dashboard</Button>
                 </Typography>
-                <Button href="/courses" color="inherit">Courses</Button>
-                <Button href="/courses/new" color="inherit">Add new course</Button>
+                <Button href={COURSES} color="inherit">Courses</Button>
+                <Button href={COURSES_NEW} color="inherit">Add new course</Button>
             </Toolbar>
         </AppBar>    
     );

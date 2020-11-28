@@ -6,6 +6,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import Instructors from "../Instructors";
 import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
+import { COURSES } from "../../constants/routes";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -28,7 +29,7 @@ export default function CourseDetails() {
 
     const deleteLesson = () => {
         axios.delete(`${enpointPrefix}/${id}`);
-        history.push("/courses");
+        history.push({COURSES});
     };
 
     const [course, setCourse] = useState({});

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardActions, CardContent, Button, Grid, Typography, makeStyles } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
+import { COURSES } from "../../constants/routes";
 
 const useStyles = makeStyles({
     card: {
@@ -29,7 +30,7 @@ const CourseCard = ({ course }) => {
                     <Typography variant="h6">Dates: {course.dates.start_date} - {course.dates.end_date}</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button variant="contained" size="small" color="primary" href={"/courses/" + course.id}>View</Button>
+                    <Button variant="contained" size="small" color="primary" href={COURSES + "/" + course.id}>View</Button>
                 </CardActions>
             </Card>
         </Grid>
