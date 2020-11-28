@@ -33,7 +33,7 @@ const CoursesList = () => {
     //     history.push(`${COURSES}/${courseId}`);
     // }
 
-    const navigateToCourses = () =>{
+    const navigateToCourses = () => {
         history.push(COURSES);
     }
 
@@ -56,7 +56,7 @@ const CoursesList = () => {
             }
         };
 
-        fetchData();        
+        fetchData();
     }, []);
 
     if (error) {
@@ -73,11 +73,18 @@ const CoursesList = () => {
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Bookable</TableCell>
-                            <TableCell>Price</TableCell>
-                            <TableCell>Dates</TableCell>
-                            <TableCell>Actions</TableCell>
+                        <TableCell><Typography variant="h6">Last 4 Courses</Typography></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                            <TableCell></TableCell>
+                        </TableRow>
+                        <TableRow>
+                            <TableCell><b>Title</b></TableCell>
+                            <TableCell><b>Bookable</b></TableCell>
+                            <TableCell><b>Price</b></TableCell>
+                            <TableCell><b>Dates</b></TableCell>
+                            <TableCell><b>Actions</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
