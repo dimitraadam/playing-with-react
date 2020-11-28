@@ -8,7 +8,7 @@ const useStyles = makeStyles({
         minWidth: 650
     },
     block: {
-        margin: 20
+        margin: 20       
     },
     btn: {
         float: "right",
@@ -55,7 +55,7 @@ export default function CoursesList() {
     //   }
 
     return (
-        <Grid >
+        <>
             <TableContainer component={Paper} className={classes.block}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
@@ -68,7 +68,8 @@ export default function CoursesList() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {courses.map((course) => (
+                        {courses.slice(-4)
+                        .map((course) => (
                             <TableRow key={course.id}>
                                 <TableCell component="th" scope="row">
                                     {course.title}
@@ -83,7 +84,7 @@ export default function CoursesList() {
                 </Table>
             </TableContainer>
             <Button href="/courses" variant="contained" color="primary" className={classes.btn}>View All</Button>
-        </Grid>
+        </>
     );
 }
 
