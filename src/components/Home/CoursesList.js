@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Grid, makeStyles, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import axios from 'axios';
 
-const useStyles = makeStyles({  
+const useStyles = makeStyles({
     table: {
         minWidth: 650
     },
@@ -18,24 +18,24 @@ export default function CoursesList() {
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-  
+
     useEffect(() => {
         const fetchData = () => {
             setError(false);
             setIsLoading(true);
-  
+
             axios.get(enpointPrefix)
-            .then(response => {
-                setCourses(response.data);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                setError(error);
-                setIsLoading(false);
-            });
-      };
-   
-      fetchData();
+                .then(response => {
+                    setCourses(response.data);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    setError(error);
+                    setIsLoading(false);
+                });
+        };
+
+        fetchData();
     }, []);
 
     // if (error) {
@@ -55,7 +55,7 @@ export default function CoursesList() {
                             <TableCell>Title</TableCell>
                             <TableCell>Bookable</TableCell>
                             <TableCell>Price</TableCell>
-                            <TableCell>Date</TableCell>
+                            <TableCell>Dates</TableCell>
                             <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -64,10 +64,9 @@ export default function CoursesList() {
                             <TableRow key={course.id}>
                                 <TableCell component="th" scope="row">
                                     {course.title}
-                                </TableCell>                                
-                                <TableCell> {course.open} <CheckIcon style={{ color: "#4caf50"}}/></TableCell>
-                                
-                                <TableCell>{course.price.normal}</TableCell>
+                                </TableCell>
+                                <TableCell> {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</TableCell>
+                                <TableCell>{course.price.normal} &euro;</TableCell>
                                 <TableCell>{course.dates.start_date} - {course.dates.end_date}</TableCell>
                                 <TableCell><Button variant="contained" color="primary" href={"/courses/" + course.id}>View</Button></TableCell>
                             </TableRow>
@@ -75,7 +74,7 @@ export default function CoursesList() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button href="/courses" variant="contained" color="inherit">View All</Button>
+            <Button href="/courses" variant="contained" color="primary">View All</Button>
         </Grid>
     );
 }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Grid } from '@material-ui/core';
-import Instructors from "../Instructors";
 import { useParams } from "react-router";
+import { Button, Typography, Grid, makeStyles } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import Instructors from "../Instructors";
 import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
 
@@ -12,7 +13,15 @@ function Alert(props) {
 const API_BASE_URL = "http://localhost:3001";
 const enpointPrefix = `${API_BASE_URL}/courses`;
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        margin: 20
+    }
+}));
+
 export default function CourseDetails() {
+
+    const classes = useStyles();
 
     const [course, setCourse] = useState({});
     const [error, setError] = useState(null);
@@ -41,12 +50,15 @@ export default function CourseDetails() {
     }
 
     return (
-        <Grid>
+        <Grid className={classes.root}>
             <Typography variant="h4">{course.title}</Typography>
             <img src={course.imagePath} />
-            <Typography variant="h6">{course.id}</Typography>
+            <Typography variant="h6">Price: {course.price?.normal} &euro;</Typography>
+            <Typography variant="h6">Early bird: {course.price?.early_bird} &euro;</Typography>
+            <Typography variant="h6">Bookable: {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</Typography>
             <Typography variant="h6">Duration: {course.duration}</Typography>
-            <Typography variant="body1">{course.description}</Typography>
+            <Typography variant="h6">Dates: {course.dates?.start_date} - {course.dates?.end_date}</Typography>           
+            <div dangerouslySetInnerHTML={{__html: course.description}}/>
             <Button variant="contained" color="primary">Edit</Button>
             <Button variant="contained" color="secondary">Delete</Button>
             <Instructors instructorIds={course.instructors} />

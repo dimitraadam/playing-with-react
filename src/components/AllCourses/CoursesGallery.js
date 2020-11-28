@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CourseCard from "./CourseCard";
 import axios from 'axios';
-import { Grid }  from '@material-ui/core'; 
+import { Grid } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 const API_BASE_URL = "http://localhost:3001";
@@ -39,12 +39,16 @@ export default function CoursesGallery() {
         return <Alert severity="warning">{error.message}</Alert>;
     }
 
-      if (isLoading) {
-        
-      }
+    if (isLoading) {
+
+    }
 
     return (
-        <Grid>
+        <Grid container
+            direction="row"
+            justify="flex-start"
+            alignItems="flex-start"
+        >
             {courses.map((course) =>
                 <Grid item key={course.id}>
                     <CourseCard course={course} />
