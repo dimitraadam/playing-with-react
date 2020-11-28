@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-import { TextField, Divider, Button, Typography, FormGroup, Checkbox, makeStyles } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { TextField, Divider, Button, Typography, FormGroup, Checkbox, makeStyles } from "@material-ui/core";
+import { COURSES } from "../../constants/routes";
+import { COURSES_ENDPOINT, INSTRUCTORS_ENDPOINT } from "../../api/endpoints";
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -12,72 +15,84 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const API_BASE_URL = "http://localhost:3001";
-const enpointPrefix = `${API_BASE_URL}/courses`;
-
 const CourseForm = () => {
     const classes = useStyles();
-
-
-    const [title, setTitle] = useState("");
-    const [duration, setDuration] = useState("");
-    const [imagePath, setImagePath] = useState("");
-    const [open, setOpen] = useState(false);
-    const [instructors, setInstructors] = useState([]);
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState({
-        early_bird: "",
-        normal: ""
-    });
-    const [dates, setDates] = useState({
-        start_date: "",
-        end_date: ""
-    });
-
-    const [message, setMessage] = useState("");
-
+    const history = useHistory();
+    
+    // const [message, setMessage] = useState("");
     const [course, setCourse] = useState(
         {
-            title: title, duration: duration, imagePath: imagePath, open: open, instructors: instructors, description: description,
-            price: price, dates: dates
+            title: "", 
+            duration: "", 
+            imagePath: "", 
+            open: false, 
+            instructors: [], 
+            description: "",
+            price: { 
+                early_bird: "",
+                normal: ""
+            }, 
+            dates: {
+                start_date: "",
+                end_date: ""
+            }
         });
 
+    const [instructors, setInstructors] = useState([]);
+    useEffect(() => {
 
-    const onInputChange = ({ target }, setState) => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(INSTRUCTORS_ENDPOINT);
+                setInstructors(response.data);
+            } catch {
+
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const onSimpleInputChange = ({ target }) => {
         const { name, value } = target;
-        if (name === "start_date" || name === "end_date") {
-            setState((dates) => ({
-                ...dates,
-                [name]: value
-            }));
-            setCourse((course) => ({ ...course, dates: dates }));
-        }
-        else if (name === "early_bird" || name === "normal") {
-            setState((price) => ({
-                ...price,
-                [name]: value
-            }));
-            setCourse((course) => ({ ...course, price: price }));
-        }
-        else if (name === "open") {
-            setState(target.checked);
-            setCourse((course) => ({ ...course, open: target.checked }));
-        }
-        else {
-            setState(value);
-            setCourse((course) => ({ ...course, [name]: value }));
-        }
+        setCourse((course) => ({ ...course, [name]: value }));
     };
 
-    const { start_date, end_date } = dates;
-    const { early_bird, normal } = price;
+    const onNestedInputChange = ({ target }) => {
+        const { name, value } = target;
+        if (name === "start_date" || name === "end_date") {
+            const newDates = {
+                ...course.dates,
+                [name]: value
+            }
+            setCourse((course) => ({ ...course, dates: newDates }));
+        }
+        else if (name === "early_bird" || name === "normal") {
+            const newPrice = {
+                ...course.price,
+                [name]: value
+            }
+           
+            setCourse((course) => ({ ...course, price: newPrice }));
+        }       
+    };
 
-    const onSubmit = () => {
-        axios.post(enpointPrefix, course)
-            .then(setMessage("New course sucessfully added"))
-            .catch(error => setMessage(`Something went wrong ${error.setMessage}`))
+    const onBookableCheckboxChange = ({target}) => {
+        setCourse((course) => ({ ...course, open: target.checked }));
     }
-
+    
+    const onSubmit = async () => {
+        try {
+            const response = await axios.post(COURSES_ENDPOINT, course);
+            alert("New course sucessfully added");
+            // setMessage("New course sucessfully added");
+        } catch (e) {
+            alert(`Something went wrong ${e.setMessage}`);
+            // setMessage(`Something went wrong ${e.setMessage}`);
+        }
+        // alert(message);
+        history.push(COURSES);
+    }
 
     return (
 
@@ -87,24 +102,24 @@ const CourseForm = () => {
                 <Typography>Title</Typography>
                 <TextField
                     fullWidth size="small" id="title" variant="outlined" name="title"
-                    value={title}
-                    onChange={(event) => { onInputChange(event, setTitle) }}
+                    value={course.title}
+                    onChange={(event) => { onSimpleInputChange(event) }}
                 />
             </FormGroup>
             <FormGroup row>
                 <Typography>Duration</Typography>
                 <TextField
                     fullWidth size="small" id="duration" variant="outlined" name="duration"
-                    value={duration}
-                    onChange={(event) => { onInputChange(event, setDuration) }}
+                    value={course.duration}
+                    onChange={(event) => { onSimpleInputChange(event) }}
                 />
             </FormGroup>
             <FormGroup row>
                 <Typography>Image Path</Typography>
                 <TextField
                     fullWidth size="small" id="imagePath" variant="outlined" name="imagePath"
-                    value={imagePath}
-                    onChange={(event) => { onInputChange(event, setImagePath) }}
+                    value={course.imagePath}
+                    onChange={(event) => { onSimpleInputChange(event) }}
                 />
             </FormGroup>
             <FormGroup row>
@@ -112,71 +127,73 @@ const CourseForm = () => {
                 <Checkbox
                     color="primary"
                     name="open"
-                    checked={open}
-                    onChange={(event) => { onInputChange(event, setOpen) }}
+                    checked={course.open}
+                    onChange={(event) => { onBookableCheckboxChange(event) }}
                 />
             </FormGroup>
             <Divider />
-            <FormGroup row>
+            <FormGroup>
                 <Typography variant="h5">Instructors</Typography>
-                {/* map instructors
-                <Checkbox
+                {instructors.map((instructor) => {
+                    <>
+                        <Typography>{instructor.id}</Typography>
+                        {/* <Checkbox
                     color="primary"
-                    name={instructors.id}
+                    name={instructor?.id}
                     checked="true"
-                    onChange={(event) => { onInputChange(event, setInstructors) }}
-                /> */}
+                    onChange={(event) => { onInputChange(event, setInstructorIds) }}
+                    /> */}
+                    </>
+                }
+                )}
             </FormGroup>
             <Divider />
             <FormGroup row>
                 <Typography>Description</Typography>
                 <TextField
                     fullWidth size="small" id="description" variant="outlined" name="description"
-                    value={description}
-                    onChange={(event) => { onInputChange(event, setDescription) }}
+                    value={course.description}
+                    onChange={(event) => { onSimpleInputChange(event) }}
                 />
             </FormGroup>
             <Divider />
-
+            <Typography variant="h5">Dates</Typography>
             <FormGroup row>
-                <Typography variant="h5">Dates</Typography>
                 <Typography>Start Date</Typography>
                 <TextField
                     fullWidth size="small" id="start_date" variant="outlined" name="start_date"
-                    value={start_date}
+                    value={course?.dates?.start_date}
                     type="date"
-                    onChange={(event) => { onInputChange(event, setDates) }}
+                    onChange={(event) => { onNestedInputChange(event) }}
                 />
                 <Typography>End Date</Typography>
                 <TextField
                     fullWidth size="small" id="end_date" variant="outlined" name="end_date"
-                    value={end_date}
+                    value={course?.dates?.end_date}
                     type="date"
-                    onChange={(event) => { onInputChange(event, setDates) }}
+                    onChange={(event) => { onNestedInputChange(event) }}
                 />
             </FormGroup>
             <Divider />
+            <Typography variant="h5">Price</Typography>
             <FormGroup row>
-                <Typography variant="h5">Price</Typography>
                 <Typography>Normal</Typography>
                 <TextField
                     fullWidth size="small" id="normal" variant="outlined" name="normal"
-                    value={normal}
-                    onChange={(event) => { onInputChange(event, setPrice) }}
+                    value={course?.price?.normal}
+                    onChange={(event) => { onNestedInputChange(event) }}
                 />
                 <Typography>Early bird</Typography>
                 <TextField
                     fullWidth size="small" id="early_bird" variant="outlined" name="early_bird"
-                    value={early_bird}
-                    onChange={(event) => { onInputChange(event, setPrice) }}
+                    value={course?.price?.early_bird}
+                    onChange={(event) => { onNestedInputChange(event) }}
                 />
             </FormGroup>
             <Divider />
 
 
             <Button variant="contained" color="primary" onClick={onSubmit}>Add Course</Button>
-
-            <Typography>{message}</Typography>
         </form >
     );
 }
