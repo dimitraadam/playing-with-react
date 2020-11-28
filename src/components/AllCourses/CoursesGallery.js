@@ -6,7 +6,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import { COURSES_ENDPOINT } from "../../api/endpoints";
 
 function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} style={{margin:20}}/>;
+    return <MuiAlert elevation={6} variant="filled" {...props} style={{ margin: 20 }} />;
 }
 
 const CoursesGallery = () => {
@@ -46,7 +46,7 @@ const CoursesGallery = () => {
             alignItems="flex-start"
         >
             {courses.map((course) =>
-                <Grid>
+                <Grid item key={course.id}>
                     <CourseCard course={course} />
                 </Grid>
             )}
