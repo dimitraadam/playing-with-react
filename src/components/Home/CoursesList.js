@@ -7,6 +7,14 @@ const useStyles = makeStyles({
     table: {
         minWidth: 650
     },
+    block: {
+        margin: 20
+    },
+    btn: {
+        float: "right",
+        marginTop: 20,
+        marginRight: 60
+    }
 });
 
 const API_BASE_URL = "http://localhost:3001";
@@ -47,8 +55,8 @@ export default function CoursesList() {
     //   }
 
     return (
-        <Grid>
-            <TableContainer component={Paper}>
+        <Grid >
+            <TableContainer component={Paper} className={classes.block}>
                 <Table className={classes.table} aria-label="simple table">
                     <TableHead>
                         <TableRow>
@@ -74,7 +82,7 @@ export default function CoursesList() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button href="/courses" variant="contained" color="primary">View All</Button>
+            <Button href="/courses" variant="contained" color="primary" className={classes.btn}>View All</Button>
         </Grid>
     );
 }

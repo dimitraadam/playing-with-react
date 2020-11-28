@@ -10,6 +10,10 @@ const useStyles = makeStyles(() => ({
     },
     homeTitle: {
         flexGrow: 1
+    },
+    homebutton:{
+        color:"white", 
+        fontSize:"1.2em"
     }
 }));
 
@@ -20,7 +24,7 @@ export default function AppHeader() {
         <AppBar position="static" className={classes.root}>
             <Toolbar>
                 <Typography variant="h6" className={classes.homeTitle}>
-                    <Button href="/">Legendary.Academy Dashboard</Button>
+                    <Button href="/" style={{color:"white", fontSize:"1.2em"}}>Legendary.Academy Dashboard</Button>
                 </Typography>
                 <Button href="/courses" color="inherit">Courses</Button>
                 <Button href="/courses/new" color="inherit">Add new course</Button>

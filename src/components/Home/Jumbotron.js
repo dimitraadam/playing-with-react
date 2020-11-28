@@ -2,14 +2,13 @@ import { Typography, Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     root: {
-      width:"100%",    
-      margin: 30,
-      padding: 10,     
-      borderRadius: 6,
-      background: "lightGrey",
+        padding: 30,
+        margin:30,
+        borderRadius: 3,
+        background: "whitesmoke",
     }
-  }));
-  
+}));
+
 export default function Jumbotron() {
 
     const classes = useStyles();
@@ -17,10 +16,10 @@ export default function Jumbotron() {
         <Grid className={classes.root}>
             <Typography variant="h4">
                 Welcome to Legendary.Academy Dashboard
-        </Typography>
+            </Typography>
             <Typography variant="h6">
                 Learn everything and have fun!
-        </Typography>
+            </Typography>
         </Grid>
     );
 };

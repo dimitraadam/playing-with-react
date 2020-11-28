@@ -4,9 +4,11 @@ import axios from "axios";
 
 const useStyles = makeStyles(() => ({
     paper: {
-        padding: 10
+        padding: 10,
+        display: 'flex'        
     },
     label: {
+        padding: 5,
         textTransform: 'uppercase',
       },
 }));
@@ -58,7 +60,7 @@ export default function Statistics() {
             {stats.map((stat) =>
                 <Grid item>
                     <Paper className={classes.paper}>
-                        <Typography >{stat.title}</Typography>
+                        <Typography className={classes.label}>{stat.title}</Typography>
                         <Chip color="primary" label={stat.amount} />
                     </Paper>
                 </Grid>)}            
