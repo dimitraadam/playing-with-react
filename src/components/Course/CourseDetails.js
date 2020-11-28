@@ -13,17 +13,25 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
-        margin: 20
-    }
+        margin: 20,
+        width:500
+    },
+    flex: {
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    media: {
+        height: 500,
+    },
 }));
 
 const CourseDetails = () => {
 
     const classes = useStyles();
     const history = useHistory();
-   
+
     const deleteLesson = async () => {
         try {
             await axios.delete(`${COURSES_ENDPOINT}/${id}`);
@@ -59,19 +67,23 @@ const CourseDetails = () => {
     }
 
     return (
-        <Grid className={classes.root}>
+        <div className={classes.root}>
             <Typography variant="h4">{course.title}</Typography>
-            <img src={course.imagePath} />
-            <Typography variant="h6">Price: {course.price?.normal} &euro;</Typography>
-            <Typography variant="h6">Early bird: {course.price?.early_bird} &euro;</Typography>
-            <Typography variant="h6">Bookable: {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</Typography>
+            <img src={course.imagePath} className={classes.media} />
+            <div className={classes.flex}>
+                <Typography variant="h6">Price: {course.price?.normal} &euro;</Typography>
+                <Typography variant="h6">Early bird: {course.price?.early_bird} &euro;</Typography>
+            </div>
+            <div className={classes.flex}>
+                <Typography variant="h6">Bookable: {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</Typography>
+                <Typography variant="h6">Dates: {course.dates?.start_date} - {course.dates?.end_date}</Typography>
+            </div>
             <Typography variant="h6">Duration: {course.duration}</Typography>
-            <Typography variant="h6">Dates: {course.dates?.start_date} - {course.dates?.end_date}</Typography>
             <div dangerouslySetInnerHTML={{ __html: course.description }} />
             <Button variant="contained" color="primary">Edit</Button>
             <Button variant="contained" color="secondary" onClick={deleteLesson}>Delete </Button>
             <Instructors instructorIds={course.instructors} />
-        </Grid>
+        </div>
     );
 }
 

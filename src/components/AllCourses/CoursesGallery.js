@@ -46,7 +46,7 @@ const CoursesGallery = () => {
             alignItems="flex-start"
         >
             {courses.map((course) =>
-                <Grid item key={course.id}>
+                <Grid>
                     <CourseCard course={course} />
                 </Grid>
             )}
