@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router";
+import { useHistory } from "react-router-dom";
 import { Button, Typography, Grid, makeStyles } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import Instructors from "../Instructors";
@@ -19,9 +20,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function CourseDetails() {
 
+export default function CourseDetails() {
+    
     const classes = useStyles();
+    const history = useHistory();
+
+    const deleteLesson = () => {
+        axios.delete(`${enpointPrefix}/${id}`);
+        history.push("/courses");
+    };
 
     const [course, setCourse] = useState({});
     const [error, setError] = useState(null);
@@ -57,10 +65,10 @@ export default function CourseDetails() {
             <Typography variant="h6">Early bird: {course.price?.early_bird} &euro;</Typography>
             <Typography variant="h6">Bookable: {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</Typography>
             <Typography variant="h6">Duration: {course.duration}</Typography>
-            <Typography variant="h6">Dates: {course.dates?.start_date} - {course.dates?.end_date}</Typography>           
-            <div dangerouslySetInnerHTML={{__html: course.description}}/>
+            <Typography variant="h6">Dates: {course.dates?.start_date} - {course.dates?.end_date}</Typography>
+            <div dangerouslySetInnerHTML={{ __html: course.description }} />
             <Button variant="contained" color="primary">Edit</Button>
-            <Button variant="contained" color="secondary">Delete</Button>
+            <Button variant="contained" color="secondary" onClick={deleteLesson}>Delete </Button>
             <Instructors instructorIds={course.instructors} />
         </Grid>
     );
