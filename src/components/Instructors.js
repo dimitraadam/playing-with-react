@@ -3,14 +3,14 @@ import Instructor from "./Instructor";
 import {  Typography, Grid } from '@material-ui/core';
 import axios from 'axios';
 
-const Instructors = (instructorIds) => {
+const Instructors = ({instructorIds}) => {
 
     const API_BASE_URL = "http://localhost:3001";
     const enpointPrefix = `${API_BASE_URL}/instructors`;
 
     const [instructors, setInstructors] = useState([]);
     const [error, setError] = useState(null);
-    
+
     useEffect(() => {
 
         const fetchData = () => {
@@ -31,14 +31,11 @@ const Instructors = (instructorIds) => {
 
     return (
         <Grid>
-            <Typography variant="h4">Instructors</Typography>
-            {instructors.map((instructor) =>
-                <Instructor instructor={instructor} />
-            )}
-            {/* {instructors.filter((instructor) => instructorIds.includes(instructor.id))
+            <Typography variant="h4">Instructors</Typography>           
+            {instructors.filter((instructor) => instructorIds?.includes(instructor?.id))
                 .map((filteredInstructor) =>
-                <Instructor instructor={filteredInstructor} />
-            )} */}
+                    <Instructor instructor={filteredInstructor} />
+            )}
         </Grid>
     );
 }
