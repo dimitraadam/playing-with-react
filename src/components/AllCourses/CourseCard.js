@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     },
 });
 
-
 const CourseCard = ({ course }) => {
 
     const classes = useStyles();
@@ -42,7 +41,5 @@ const CourseCard = ({ course }) => {
         </Grid>
     );
 }
-
-
 
 export default CourseCard;

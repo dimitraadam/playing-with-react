@@ -7,7 +7,7 @@ import Instructors from "../Instructors";
 import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import { COURSES } from "../../constants/routes";
-import { COURSES_ENDPOINT } from "../../api/endpoints"; 
+import { COURSES_ENDPOINT } from "../../api/endpoints";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -19,15 +19,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const CourseDetails = () => {
 
-export default function CourseDetails() {
-    
     const classes = useStyles();
     const history = useHistory();
-
-    const deleteLesson = () => {
-        axios.delete(`${COURSES_ENDPOINT}/${id}`);
-        history.push({COURSES});
+   
+    const deleteLesson = async () => {
+        try {
+            await axios.delete(`${COURSES_ENDPOINT}/${id}`);
+            alert("Course deleted");
+        } catch {
+        }
+        history.push(COURSES);
     };
 
     const [course, setCourse] = useState({});
@@ -37,16 +40,15 @@ export default function CourseDetails() {
 
     useEffect(() => {
 
-        const fetchData = () => {
+        const fetchData = async () => {
             setError(false);
-
-            axios.get(`${COURSES_ENDPOINT}/${id}`)
-                .then(response => {
-                    setCourse(response.data);
-                })
-                .catch(error => {
-                    setError(error);
-                });
+            try {
+                const response = await axios.get(`${COURSES_ENDPOINT}/${id}`);
+                setCourse(response.data);
+            } catch (e) {
+                setError(e);
+            } finally {
+            }
         };
 
         fetchData();
@@ -73,3 +75,4 @@ export default function CourseDetails() {
     );
 }
 
+export default CourseDetails;

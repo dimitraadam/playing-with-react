@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
-import { Button, Grid, makeStyles, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core';
+import { Button, makeStyles, TableContainer, Typography, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
+import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
 import { COURSES } from "../../constants/routes";
 import { COURSES_ENDPOINT } from "../../api/endpoints";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles({
     table: {
@@ -20,7 +25,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function CoursesList() {
+const CoursesList = () => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -37,31 +42,30 @@ export default function CoursesList() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = () => {
-            setError(false);
-            setIsLoading(true);
 
-            axios.get(COURSES_ENDPOINT)
-                .then(response => {
-                    setCourses(response.data);
-                    setIsLoading(false);
-                })
-                .catch(error => {
-                    setError(error);
-                    setIsLoading(false);
-                });
+        const fetchData = async () => {
+            setIsLoading(true);
+            setError(false);
+            try {
+                const response = await axios.get(COURSES_ENDPOINT);
+                setCourses(response.data);
+            } catch (e) {
+                setError(e);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
-        fetchData();
+        fetchData();        
     }, []);
 
-    // if (error) {
-    //     return <Alert severity="warning">{error.message}</Alert>;
-    // }
+    if (error) {
+        return <Alert severity="warning">{error.message}</Alert>;
+    }
 
-    // if (isLoading) {
-    //     return <div>loading</div>
-    //   }
+    if (isLoading) {
+        return <Typography variant="body1">Loading...</Typography>
+    }
 
     return (
         <>
@@ -98,3 +102,4 @@ export default function CoursesList() {
     );
 }
 
+export default CoursesList; 

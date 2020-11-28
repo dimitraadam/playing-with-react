@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Chip, Typography, Grid, makeStyles, Paper } from "@material-ui/core";
+import { Chip, Typography, Grid, makeStyles, Paper } from "@material-ui/core";
+import MuiAlert from '@material-ui/lab/Alert';
 import axios from "axios";
 import { STATS_ENDPOINT } from "../../api/endpoints";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 
 const useStyles = makeStyles(() => ({
     paper: {
@@ -14,7 +20,7 @@ const useStyles = makeStyles(() => ({
       },
 }));
 
-export default function Statistics() {
+const Statistics = () => {
 
     const classes = useStyles();
 
@@ -23,31 +29,31 @@ export default function Statistics() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = () => {
-            setError(false);
-            setIsLoading(true);
 
-            axios.get(STATS_ENDPOINT)
-                .then(response => {
-                    setStats(response.data);
-                    setIsLoading(false);
-                })
-                .catch(error => {
-                    setError(error);
-                    setIsLoading(false);
-                });
+        const fetchData = async () => {
+            setIsLoading(true);
+            setError(false);
+            try {
+                const response = await axios.get(STATS_ENDPOINT);
+                setStats(response.data);
+            } catch (e) {
+                setError(e);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
         fetchData();
     }, []);
 
-    // if (error) {
-    //     return <Alert severity="warning">{error.message}</Alert>;
-    // }
+    
+    if (error) {
+        return <Alert severity="warning">{error.message}</Alert>;
+    }
 
-    // if (isLoading) {
-    //     return <div>loading</div>
-    //   }
+    if (isLoading) {
+        return <Typography variant="body1">Loading...</Typography>
+    }
 
     return (
         <Grid
@@ -65,3 +71,5 @@ export default function Statistics() {
         </Grid>
     );
 }
+
+export default Statistics;

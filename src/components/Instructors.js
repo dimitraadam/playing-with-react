@@ -10,16 +10,15 @@ const Instructors = ({instructorIds}) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-
-        const fetchData = () => {
+        const fetchData = async () => {           
             setError(false);
-            axios.get(INSTRUCTORS_ENDPOINT)
-                .then(response => {
-                    setInstructors(response.data);
-                })
-                .catch(error => {
-                    setError(error);
-                });
+            try {
+                const response = await axios.get(INSTRUCTORS_ENDPOINT);
+                setInstructors(response.data);
+            } catch (e) {
+                setError(e);
+            } finally {
+            }
         };
 
         fetchData();
