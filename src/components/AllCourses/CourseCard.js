@@ -1,28 +1,41 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import { Typography } from '@material-ui/core';
+import { Card, CardActions, CardContent, Button, Grid, Typography, makeStyles } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
 
-const CourseCard = ({ course }) => (
-    <Card variant="outlined">
-        <CardContent>
-            <Typography variant="h4">{course.title}</Typography>
-            <img src={course.imagePath} />
-            <Typography variant="h6">Price: {course.price.normal}</Typography>
-            <Typography variant="h6">Bookable: 
-            {/* {{course.open}? () :() } */}
-                        {course.open}</Typography>
+const useStyles = makeStyles({
+    card: {
+        margin: 20,
+        padding:5,
+        width: 200,
+        height: 250,
+    },
+});
 
-            <Typography variant="h6">Early bird: {course.price.early_bird}</Typography>
-            <Typography variant="h6">Duration: {course.duration}</Typography>
-            <Typography variant="h6">Dates: {course.dates.start_date} - {course.dates.end_date}</Typography>
-        </CardContent>
-        <CardActions>
-            <Button variant="contained" size="small" color="primary" href={"/courses/"+ course.id}>View</Button>
-        </CardActions>
-    </Card>
-);
+
+const CourseCard = ({ course }) => {
+
+    const classes = useStyles();
+
+    return (
+        <Grid item classname={classes.card}>
+            <Card variant="outlined">
+                <CardContent>
+                    <Typography variant="h4">{course.title}</Typography>
+                    <img src={course.imagePath} />
+                    <Typography variant="h6">Price: {course.price.normal} &euro;</Typography>
+                    <Typography variant="h6">Early bird: {course.price.early_bird} &euro;</Typography>
+                    <Typography variant="h6">Bookable: {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</Typography>
+                    <Typography variant="h6">Duration: {course.duration}</Typography>
+                    <Typography variant="h6">Dates: {course.dates.start_date} - {course.dates.end_date}</Typography>
+                </CardContent>
+                <CardActions>
+                    <Button variant="contained" size="small" color="primary" href={"/courses/" + course.id}>View</Button>
+                </CardActions>
+            </Card>
+        </Grid>
+    );
+}
+
+
 
 export default CourseCard;
