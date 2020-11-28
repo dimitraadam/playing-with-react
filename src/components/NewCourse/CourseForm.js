@@ -53,12 +53,7 @@ const CourseForm = () => {
         fetchData();
     }, []);
 
-    const onSimpleInputChange = ({ target }) => {
-        const { name, value } = target;
-        setCourse((course) => ({ ...course, [name]: value }));
-    };
-
-    const onNestedInputChange = ({ target }) => {
+    const onInputChange = ({ target }) => {
         const { name, value } = target;
         if (name === "start_date" || name === "end_date") {
             const newDates = {
@@ -71,16 +66,17 @@ const CourseForm = () => {
             const newPrice = {
                 ...course.price,
                 [name]: value
-            }
-           
+            }           
             setCourse((course) => ({ ...course, price: newPrice }));
-        }       
+        }
+        else if (name === "open") {
+            setCourse((course) => ({ ...course, open: target.checked }));
+        }
+        else {
+            setCourse((course) => ({ ...course, [name]: value }));
+        }
     };
-
-    const onBookableCheckboxChange = ({target}) => {
-        setCourse((course) => ({ ...course, open: target.checked }));
-    }
-    
+   
     const onSubmit = async () => {
         try {
             const response = await axios.post(COURSES_ENDPOINT, course);
@@ -103,7 +99,7 @@ const CourseForm = () => {
                 <TextField
                     fullWidth size="small" id="title" variant="outlined" name="title"
                     value={course.title}
-                    onChange={(event) => { onSimpleInputChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
             <FormGroup row>
@@ -111,7 +107,7 @@ const CourseForm = () => {
                 <TextField
                     fullWidth size="small" id="duration" variant="outlined" name="duration"
                     value={course.duration}
-                    onChange={(event) => { onSimpleInputChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
             <FormGroup row>
@@ -119,7 +115,7 @@ const CourseForm = () => {
                 <TextField
                     fullWidth size="small" id="imagePath" variant="outlined" name="imagePath"
                     value={course.imagePath}
-                    onChange={(event) => { onSimpleInputChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
             <FormGroup row>
@@ -128,7 +124,7 @@ const CourseForm = () => {
                     color="primary"
                     name="open"
                     checked={course.open}
-                    onChange={(event) => { onBookableCheckboxChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
             <Divider />
@@ -153,7 +149,7 @@ const CourseForm = () => {
                 <TextField
                     fullWidth size="small" id="description" variant="outlined" name="description"
                     value={course.description}
-                    onChange={(event) => { onSimpleInputChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
             <Divider />
@@ -164,14 +160,14 @@ const CourseForm = () => {
                     fullWidth size="small" id="start_date" variant="outlined" name="start_date"
                     value={course?.dates?.start_date}
                     type="date"
-                    onChange={(event) => { onNestedInputChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
                 <Typography>End Date</Typography>
                 <TextField
                     fullWidth size="small" id="end_date" variant="outlined" name="end_date"
                     value={course?.dates?.end_date}
                     type="date"
-                    onChange={(event) => { onNestedInputChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
             <Divider />
@@ -181,13 +177,13 @@ const CourseForm = () => {
                 <TextField
                     fullWidth size="small" id="normal" variant="outlined" name="normal"
                     value={course?.price?.normal}
-                    onChange={(event) => { onNestedInputChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
                 <Typography>Early bird</Typography>
                 <TextField
                     fullWidth size="small" id="early_bird" variant="outlined" name="early_bird"
                     value={course?.price?.early_bird}
-                    onChange={(event) => { onNestedInputChange(event) }}
+                    onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
             <Divider />
