@@ -5,7 +5,7 @@ import axios from "axios";
 import { STATS_ENDPOINT } from "../../api/endpoints";
 
 function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
+    return <MuiAlert elevation={6} variant="filled" {...props} style={{margin:20}}/>;
 }
 
 

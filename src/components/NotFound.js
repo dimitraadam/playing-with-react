@@ -4,7 +4,7 @@ const NotFound = () => {
   const location = useLocation();
 
   return (
-    <p>{`The path ${location.pathname} not found`}</p>
+    <p style={{margin:20}}>{`Sorry... The path '${location.pathname}' was not found`}</p>
   );
 };
 
