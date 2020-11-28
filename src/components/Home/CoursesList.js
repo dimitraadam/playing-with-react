@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import { Button, Grid, makeStyles, TableContainer, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import axios from 'axios';
@@ -10,7 +11,7 @@ const useStyles = makeStyles({
         minWidth: 650
     },
     block: {
-        margin: 20       
+        margin: 20
     },
     btn: {
         float: "right",
@@ -21,6 +22,15 @@ const useStyles = makeStyles({
 
 export default function CoursesList() {
     const classes = useStyles();
+    const history = useHistory();
+
+    // const navigateToCourseDetails = (courseId) => {
+    //     history.push(`${COURSES}/${courseId}`);
+    // }
+
+    const navigateToCourses = () =>{
+        history.push(COURSES);
+    }
 
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +40,7 @@ export default function CoursesList() {
         const fetchData = () => {
             setError(false);
             setIsLoading(true);
-            
+
             axios.get(COURSES_ENDPOINT)
                 .then(response => {
                     setCourses(response.data);
@@ -68,21 +78,22 @@ export default function CoursesList() {
                     </TableHead>
                     <TableBody>
                         {courses.slice(-4)
-                        .map((course) => (
-                            <TableRow key={course.id}>
-                                <TableCell component="th" scope="row">
-                                    {course.title}
-                                </TableCell>
-                                <TableCell> {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</TableCell>
-                                <TableCell>{course.price.normal} &euro;</TableCell>
-                                <TableCell>{course.dates.start_date} - {course.dates.end_date}</TableCell>
-                                <TableCell><Button variant="contained" color="primary" href={COURSES + "/" + course.id}>View</Button></TableCell>
-                            </TableRow>
-                        ))}
+                            .map((course) => (
+                                <TableRow key={course.id}>
+                                    <TableCell component="th" scope="row">
+                                        {course.title}
+                                    </TableCell>
+                                    <TableCell> {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</TableCell>
+                                    <TableCell>{course.price.normal} &euro;</TableCell>
+                                    <TableCell>{course.dates.start_date} - {course.dates.end_date}</TableCell>
+                                    {/* <TableCell><Button variant="contained" color="primary" onClick={navigateToCourseDetails(couse.id)}>View</Button></TableCell> */}
+                                    <TableCell><Button variant="contained" color="primary" href={COURSES + "/" + course.id}>View</Button></TableCell>
+                                </TableRow>
+                            ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button href={COURSES} variant="contained" color="primary" className={classes.btn}>View All</Button>
+            <Button onClick={navigateToCourses} variant="contained" color="primary" className={classes.btn}>View All</Button>
         </>
     );
 }

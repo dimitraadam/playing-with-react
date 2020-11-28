@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import { Card, CardActions, CardContent, Button, Grid, Typography, makeStyles } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { COURSES } from "../../constants/routes";
@@ -16,7 +17,12 @@ const useStyles = makeStyles({
 const CourseCard = ({ course }) => {
 
     const classes = useStyles();
+    const history = useHistory();
 
+    const navigateToCourseDetails = () => {
+        history.push(`${COURSES}/${course.id}`);
+    }
+    
     return (
         <Grid item classname={classes.card}>
             <Card variant="outlined">
@@ -30,7 +36,7 @@ const CourseCard = ({ course }) => {
                     <Typography variant="h6">Dates: {course.dates.start_date} - {course.dates.end_date}</Typography>
                 </CardContent>
                 <CardActions>
-                    <Button variant="contained" size="small" color="primary" href={COURSES + "/" + course.id}>View</Button>
+                    <Button variant="contained" size="small" color="primary" onClick={navigateToCourseDetails}>View</Button>
                 </CardActions>
             </Card>
         </Grid>
