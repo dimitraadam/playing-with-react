@@ -18,20 +18,20 @@ const useStyles = makeStyles((theme) => ({
 const CourseForm = () => {
     const classes = useStyles();
     const history = useHistory();
-    
+
     // const [message, setMessage] = useState("");
     const [course, setCourse] = useState(
         {
-            title: "", 
-            duration: "", 
-            imagePath: "", 
-            open: false, 
-            instructors: [], 
+            title: "",
+            duration: "",
+            imagePath: "",
+            open: false,
+            instructors: [],
             description: "",
-            price: { 
+            price: {
                 early_bird: "",
                 normal: ""
-            }, 
+            },
             dates: {
                 start_date: "",
                 end_date: ""
@@ -66,7 +66,7 @@ const CourseForm = () => {
             const newPrice = {
                 ...course.price,
                 [name]: value
-            }           
+            }
             setCourse((course) => ({ ...course, price: newPrice }));
         }
         else if (name === "open") {
@@ -76,8 +76,19 @@ const CourseForm = () => {
             setCourse((course) => ({ ...course, [name]: value }));
         }
     };
-   
-    const onSubmit = async () => {
+
+    const onInstructorChange = ({ target }) => {
+        const index = course.instructors.indexOf(target.name);
+        const newInstructorIds = course.instructors;
+        if (target.checked) {
+            index === -1  && newInstructorIds.push(target.name);
+        } else {
+            index !== -1  && newInstructorIds.splice(index, 1);
+        }
+        setCourse((course) =>({...course, instructors: newInstructorIds}));
+    }
+
+    const addCourse = async () => {
         try {
             const response = await axios.post(COURSES_ENDPOINT, course);
             alert("New course sucessfully added");
@@ -92,7 +103,7 @@ const CourseForm = () => {
 
     return (
 
-        <form className={classes.form} noValidate autoComplete="off">
+        <form className={classes.form}>
             <Typography variant="h4">Add Course</Typography>
             <FormGroup row>
                 <Typography>Title</Typography>
@@ -130,18 +141,38 @@ const CourseForm = () => {
             <Divider />
             <FormGroup>
                 <Typography variant="h5">Instructors</Typography>
-                {instructors.map((instructor) => {
+
+                <>
+                    <Typography>Dimitra Adam</Typography>
+                    <Checkbox
+                        color="primary"
+                        name="01"
+                        checked={course?.instructors?.indexOf("01") !== -1}
+                        onChange={(event) => { onInstructorChange(event) }}
+                    />
+                </>
+                <>
+                    <Typography>John Doe</Typography>
+                    <Checkbox
+                        color="primary"
+                        name="02"
+                        checked={course?.instructors?.indexOf("02") !== -1}
+                        onChange={(event) => { onInstructorChange(event) }}
+                    />
+                </>
+
+                {/* {instructors.map((instructor) => {
                     <>
-                        <Typography>{instructor.id}</Typography>
-                        {/* <Checkbox
-                    color="primary"
-                    name={instructor?.id}
-                    checked="true"
-                    onChange={(event) => { onInputChange(event, setInstructorIds) }}
-                    /> */}
+                        <Typography>{instructor?.name?.first} {instructor?.name?.last}</Typography>
+                        <Checkbox
+                            color="primary"
+                            name={instructor?.id}
+                            checked={course?.instructors?.indexOf(instructor?.id) !== -1}
+                            onChange={(event) => { onInstructorChange(event) }}
+                        />
                     </>
                 }
-                )}
+                )} */}
             </FormGroup>
             <Divider />
             <FormGroup row>
@@ -188,8 +219,7 @@ const CourseForm = () => {
             </FormGroup>
             <Divider />
 
-
-            <Button variant="contained" color="primary" onClick={onSubmit}>Add Course</Button>
+            <Button variant="contained" color="primary" onClick={addCourse}>Add Course</Button>
         </form >
     );
 }
