@@ -8,7 +8,7 @@ import CourseDetails from "./components/Course/CourseDetails";
 import CourseForm from "./components/NewCourse/CourseForm";
 import Notfound from "./components/NotFound";
 import lightTheme from "./styles/lightTheme";
-import { HOME, COURSES, COURSES_NEW} from "./constants/routes";
+import { HOME, COURSES, COURSES_NEW, COURSES_EDIT} from "./constants/routes";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
           <Route exact path={COURSES} component={CoursesGallery}></Route>
           <Route exact path={COURSES_NEW}component={CourseForm}></Route>
           <Route exact path={COURSES + "/:id"} component={CourseDetails}></Route>
+          <Route exact path={COURSES_EDIT + "/:id" } component={CourseForm}></Route>
           <Route><Notfound /></Route>
         </Switch>
       </MuiThemeProvider>

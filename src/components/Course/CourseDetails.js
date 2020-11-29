@@ -6,7 +6,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import Instructors from "../Instructors";
 import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
-import { COURSES } from "../../constants/routes";
+import { COURSES, COURSES_EDIT } from "../../constants/routes";
 import { COURSES_ENDPOINT } from "../../api/endpoints";
 
 function Alert(props) {
@@ -40,6 +40,10 @@ const CourseDetails = () => {
         }
         history.push(COURSES);
     };
+    
+    const navigateToEdit = () => {
+        history.push(`${COURSES_EDIT}/${course.id}`);
+    }
 
     const [course, setCourse] = useState({});
     const [error, setError] = useState(null);
@@ -80,7 +84,7 @@ const CourseDetails = () => {
             </div>
             <Typography variant="h6">Duration: {course.duration}</Typography>
             <div dangerouslySetInnerHTML={{ __html: course.description }} />
-            <Button variant="contained" color="primary">Edit</Button>
+            <Button variant="contained" color="primary" onClick={navigateToEdit}>Edit</Button>
             <Button variant="contained" color="secondary" onClick={deleteLesson}>Delete </Button>
             <Instructors instructorIds={course.instructors} />
         </div>
