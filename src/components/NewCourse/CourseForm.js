@@ -5,15 +5,18 @@ import { TextField, Divider, Button, Typography, FormGroup, Checkbox, makeStyles
 import { COURSES } from "../../constants/routes";
 import { COURSES_ENDPOINT, INSTRUCTORS_ENDPOINT } from "../../api/endpoints";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     form: {
         margin: 10
     },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
+    formGroup: {
+        margin: 10
+    },
+    divider: {
+        margin: 5
     },
 }));
+
 
 const CourseForm = () => {
     const classes = useStyles();
@@ -105,7 +108,7 @@ const CourseForm = () => {
 
         <form className={classes.form}>
             <Typography variant="h4">Add Course</Typography>
-            <FormGroup row>
+            <FormGroup className={classes.formGroup}>
                 <Typography>Title</Typography>
                 <TextField
                     fullWidth size="small" id="title" variant="outlined" name="title"
@@ -113,7 +116,7 @@ const CourseForm = () => {
                     onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
-            <FormGroup row>
+            <FormGroup className={classes.formGroup}>
                 <Typography>Duration</Typography>
                 <TextField
                     fullWidth size="small" id="duration" variant="outlined" name="duration"
@@ -121,7 +124,7 @@ const CourseForm = () => {
                     onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
-            <FormGroup row>
+            <FormGroup className={classes.formGroup}>
                 <Typography>Image Path</Typography>
                 <TextField
                     fullWidth size="small" id="imagePath" variant="outlined" name="imagePath"
@@ -129,7 +132,7 @@ const CourseForm = () => {
                     onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
-            <FormGroup row>
+            <FormGroup row className={classes.formGroup}>
                 <Typography>Bookable</Typography>
                 <Checkbox
                     color="primary"
@@ -138,8 +141,8 @@ const CourseForm = () => {
                     onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
-            <Divider />
-            <FormGroup>
+            <Divider className={classes.divider}/>
+            <FormGroup row className={classes.formGroup}>
                 <Typography variant="h5">Instructors</Typography>
 
                 <>
@@ -174,8 +177,8 @@ const CourseForm = () => {
                 }
                 )} */}
             </FormGroup>
-            <Divider />
-            <FormGroup row>
+            <Divider className={classes.divider}/>
+            <FormGroup className={classes.formGroup}>
                 <Typography>Description</Typography>
                 <TextField
                     fullWidth size="small" id="description" variant="outlined" name="description"
@@ -183,9 +186,9 @@ const CourseForm = () => {
                     onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
-            <Divider />
+            <Divider className={classes.divider}/>
             <Typography variant="h5">Dates</Typography>
-            <FormGroup row>
+            <FormGroup className={classes.formGroup}>
                 <Typography>Start Date</Typography>
                 <TextField
                     fullWidth size="small" id="start_date" variant="outlined" name="start_date"
@@ -201,9 +204,9 @@ const CourseForm = () => {
                     onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
-            <Divider />
+            <Divider className={classes.divider}/>
             <Typography variant="h5">Price</Typography>
-            <FormGroup row>
+            <FormGroup className={classes.formGroup}>
                 <Typography>Normal</Typography>
                 <TextField
                     fullWidth size="small" id="normal" variant="outlined" name="normal"
@@ -217,8 +220,6 @@ const CourseForm = () => {
                     onChange={(event) => { onInputChange(event) }}
                 />
             </FormGroup>
-            <Divider />
-
             <Button variant="contained" color="primary" onClick={addCourse}>Add Course</Button>
         </form >
     );
