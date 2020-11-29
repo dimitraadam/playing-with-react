@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
-import { Button, makeStyles, TableContainer, Typography, Table, TableHead, TableRow, TableBody, TableCell, Paper } from '@material-ui/core';
+import { Button, makeStyles, TableContainer, Typography, Table, TableHead, TableRow, TableBody, TableCell, Paper, CircularProgress } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import MuiAlert from '@material-ui/lab/Alert';
 import axios from 'axios';
@@ -67,7 +67,7 @@ const CoursesList = () => {
     }
 
     if (isLoading) {
-        return <Typography variant="body1">Loading...</Typography>
+        return <CircularProgress color="primary" />
     }
 
     return (
@@ -75,7 +75,7 @@ const CoursesList = () => {
             <Typography variant="h6" className={classes.tableTitle}>Last 4 Courses</Typography>
             <TableContainer component={Paper} className={classes.block}>
                 <Table className={classes.table} aria-label="simple table">
-                    <TableHead>                      
+                    <TableHead>
                         <TableRow>
                             <TableCell><b>Title</b></TableCell>
                             <TableCell><b>Bookable</b></TableCell>

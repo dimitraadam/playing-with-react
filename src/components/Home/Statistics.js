@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Chip, Typography, Grid, makeStyles, Paper } from "@material-ui/core";
+import { Chip, Typography, Grid, makeStyles, Paper, CircularProgress } from "@material-ui/core";
 import MuiAlert from '@material-ui/lab/Alert';
 import axios from "axios";
 import { STATS_ENDPOINT } from "../../api/endpoints";
@@ -52,7 +52,7 @@ const Statistics = () => {
     }
 
     if (isLoading) {
-        return <Typography variant="body1">Loading...</Typography>
+        return <CircularProgress color="primary"/>    
     }
 
     return (
