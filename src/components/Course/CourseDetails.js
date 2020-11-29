@@ -10,13 +10,13 @@ import { COURSES, COURSES_EDIT } from "../../constants/routes";
 import { COURSES_ENDPOINT } from "../../api/endpoints";
 
 function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} style={{margin:20}} />;
+    return <MuiAlert elevation={6} variant="filled" {...props} style={{ margin: 20 }} />;
 }
 
 const useStyles = makeStyles(() => ({
     root: {
         margin: 20,
-        width:500
+        width: 500
     },
     flex: {
         display: 'flex',
@@ -25,6 +25,10 @@ const useStyles = makeStyles(() => ({
     media: {
         height: 500,
     },
+    button: {
+        marginRight: 10,
+        marginBottom: 10
+    }
 }));
 
 const CourseDetails = () => {
@@ -40,7 +44,7 @@ const CourseDetails = () => {
         }
         history.push(COURSES);
     };
-    
+
     const navigateToEdit = () => {
         history.push(`${COURSES_EDIT}/${course.id}`);
     }
@@ -84,8 +88,8 @@ const CourseDetails = () => {
             </div>
             <Typography variant="h6">Duration: {course.duration}</Typography>
             <div dangerouslySetInnerHTML={{ __html: course.description }} />
-            <Button variant="contained" color="primary" onClick={navigateToEdit}>Edit</Button>
-            <Button variant="contained" color="secondary" onClick={deleteLesson}>Delete </Button>
+            <Button variant="contained" color="primary" onClick={navigateToEdit} className={classes.button}>Edit</Button>
+            <Button variant="contained" color="secondary" onClick={deleteLesson} className={classes.button}>Delete </Button>
             <Instructors instructorIds={course.instructors} />
         </div>
     );
