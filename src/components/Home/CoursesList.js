@@ -29,9 +29,9 @@ const CoursesList = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    // const navigateToCourseDetails = (courseId) => {
-    //     history.push(`${COURSES}/${courseId}`);
-    // }
+    const navigateToCourseDetails = (courseId) => {
+        history.push(`${COURSES}/${courseId}`);
+    }
 
     const navigateToCourses = () => {
         history.push(COURSES);
@@ -97,8 +97,7 @@ const CoursesList = () => {
                                     <TableCell> {course.open && <CheckIcon style={{ color: "#4caf50" }} />}</TableCell>
                                     <TableCell>{course.price.normal} &euro;</TableCell>
                                     <TableCell>{course.dates.start_date} - {course.dates.end_date}</TableCell>
-                                    {/* <TableCell><Button variant="contained" color="primary" onClick={navigateToCourseDetails(couse.id)}>View</Button></TableCell> */}
-                                    <TableCell><Button variant="contained" color="primary" href={COURSES + "/" + course.id}>View</Button></TableCell>
+                                    <TableCell><Button variant="contained" color="primary" onClick={() => navigateToCourseDetails(course.id)}>View</Button></TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>
