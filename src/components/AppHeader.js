@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
     },
     linkHome: {
         color: "white",      
-        fontSize: "1.2em"
+        fontSize: "1.3em"
     },
     linkRight: {
         margin: 10,
