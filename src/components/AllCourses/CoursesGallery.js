@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CourseCard from "./CourseCard";
 import axios from 'axios';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { COURSES_ENDPOINT } from "../../api/endpoints";
 
@@ -35,8 +35,8 @@ const CoursesGallery = () => {
         return <Alert severity="warning">{error.message}</Alert>;
     }
 
-    if (isLoading) {
-        return <Typography variant="body1">Loading...</Typography>
+    if (isLoading) {        
+        return <CircularProgress color="primary"/>        
     }
 
     return (

@@ -1,6 +1,6 @@
 import React from "react";
-import { makeStyles, AppBar, Toolbar, Typography, Button } from '@material-ui/core';  //TODO
-import { HOME, COURSES, COURSES_NEW} from "../constants/routes";
+import { makeStyles, AppBar, Toolbar, Typography, Button, Link } from '@material-ui/core';  //TODO
+import { HOME, COURSES, COURSES_NEW } from "../constants/routes";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
@@ -13,35 +13,30 @@ const useStyles = makeStyles(() => ({
     homeTitle: {
         flexGrow: 1
     },
-    homebutton:{
-        color:"white", 
-        fontSize:"1.2em"
-    }
+    linkHome: {
+        color: "white",      
+        fontSize: "1.2em"
+    },
+    linkRight: {
+        margin: 10,
+        fontSize: "1.1em"
+    },
+
 }));
 
 export default function AppHeader() {
     const classes = useStyles();
-    const history = useHistory();
-
-    const navigateToHome = () => {
-        history.push(HOME);
-    }
-    const navigateToCourses = () => {
-        history.push(COURSES);
-    }
-    const navigateToCourseForm = () => {
-        history.push(COURSES_NEW);
-    }
 
     return (
         <AppBar position="static" className={classes.root}>
             <Toolbar>
                 <Typography variant="h6" className={classes.homeTitle}>
-                    <Button onClick={navigateToHome} style={{color:"white", fontSize:"1.2em"}}>Legendary.Academy Dashboard</Button>
+                    <Link href={HOME} className={classes.linkHome} style={{ textDecoration: "none" }}>Legendary.Academy Dashboard</Link>
                 </Typography>
-                <Button onClick={navigateToCourses} color="inherit">Courses</Button>
-                <Button onClick={navigateToCourseForm} color="inherit">Add new course</Button>
+                <Link href={COURSES} color="inherit" className={classes.linkRight} style={{ textDecoration: "none" }}>Courses</Link>
+                <Link href={COURSES_NEW} color="inherit" className={classes.linkRight} style={{ textDecoration: "none" }}>Add new course</Link>
             </Toolbar>
-        </AppBar>    
+        </AppBar>
     );
-}   
+}
+
