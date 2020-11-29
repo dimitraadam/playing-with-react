@@ -26,7 +26,6 @@ const useStyles = makeStyles(() => ({
 
 export default function AppHeader() {
     const classes = useStyles();
-    const history = useHistory();
 
     return (
         <AppBar position="static" className={classes.root}>

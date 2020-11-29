@@ -8,7 +8,7 @@ import { COURSES } from "../../constants/routes";
 import { COURSES_ENDPOINT } from "../../api/endpoints";
 
 function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} style={{margin:20}}/>;
+    return <MuiAlert elevation={6} variant="filled" {...props} style={{ margin: 20 }} />;
 }
 
 const useStyles = makeStyles({
@@ -22,6 +22,9 @@ const useStyles = makeStyles({
         float: "right",
         marginTop: 20,
         marginRight: 60
+    },
+    tableTitle: {
+        margin: 20
     }
 });
 
@@ -69,16 +72,10 @@ const CoursesList = () => {
 
     return (
         <>
+            <Typography variant="h6" className={classes.tableTitle}>Last 4 Courses</Typography>
             <TableContainer component={Paper} className={classes.block}>
                 <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                        <TableCell><Typography variant="h6">Last 4 Courses</Typography></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                        </TableRow>
+                    <TableHead>                      
                         <TableRow>
                             <TableCell><b>Title</b></TableCell>
                             <TableCell><b>Bookable</b></TableCell>
